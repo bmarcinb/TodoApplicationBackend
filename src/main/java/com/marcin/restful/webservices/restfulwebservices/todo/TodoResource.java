@@ -16,16 +16,19 @@ public class TodoResource {
     @Autowired
     private TodoHarcodedService todoService;
 
+    //get the todolist
     @GetMapping("/users/{username}/todos")
     public List<Todo> getAllTodos(@PathVariable String username){
         return todoService.findAll();
     }
 
+    //get the specific to do
     @GetMapping("/users/{username}/todos/{id}")
     public Todo getTodo(@PathVariable String username, @PathVariable long id){
         return todoService.findById(id);
     }
 
+    //Update the todos
     @PutMapping("/users/{username}/todos/{id}")
         public ResponseEntity<Todo> updateTodo(
                 @PathVariable String username, @PathVariable long id, @RequestBody Todo todo){
@@ -33,6 +36,7 @@ public class TodoResource {
         return new ResponseEntity<Todo>(todo, HttpStatus.OK);
     }
 
+    //Add the todos
     @PostMapping("/users/{username}/todos")
     public ResponseEntity<Void> updateTodo(
             @PathVariable String username, @RequestBody Todo todo){
@@ -44,7 +48,7 @@ public class TodoResource {
             return ResponseEntity.created(uri).build();
     }
 
-
+    //Delete specific todos
     @DeleteMapping("/users/{username}/todos/{id}")
     public ResponseEntity<Void> deleteTodo(@PathVariable String username, @PathVariable long id) {
         Todo todo = todoService.deleteById(id);
